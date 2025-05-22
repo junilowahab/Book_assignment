@@ -59,7 +59,13 @@ shelf.addEventListener('submit', (e) => {
     //Adds style to the display element
     display.classList.add('display');
 
-    function displayBookInformation(){
+    if(title === '' || author === '' || pages === '' || radios === null){
+        alert('Please fill in all information');
+     }else{
+         displayBookInformation();
+     }
+
+    function displayBookInformation(f){
         var displayBox = document.createElement('div');
         displayBox.classList.add('displayBox');
         display.appendChild(displayBox);
@@ -81,19 +87,27 @@ shelf.addEventListener('submit', (e) => {
 
         deleteButton.classList.add('deleteButton')
 
-        //Create array of display children elements to identify it with the index of the myLibrary array
+        //Created array of display children elements to identify it with the index of the myLibrary array
         let displayBoxArray = Array.from(display.children);
 
-        //Create loop to match displayBox information with myLibrary array
+        //Created loop to match displayBox information with myLibrary array
         for(let i = 0; i <= myLibrary.length; i++){
             if(displayBoxArray[i] === myLibrary[i]){
                 titleContainer.innerText = myLibrary[book].title;
                 authorContainer.innerText = myLibrary[book].author;
-                pagesContainer.innerText = myLibrary[book].pages;
+                pagesContainer.innerText = myLibrary[book].pages + ' pages';
                 readContainer.innerText = myLibrary[book].beenRead;
                 deleteButton.innerText = 'Delete'
             }
         }
+
+        document.querySelector('#title').value = '';
+        document.querySelector('#author').value = '';
+        document.querySelector('#pages').value = '';
+
+        //Delete particular display box
+        deleteButton.addEventListener('click', () => {
+            deleteButton.parentElement.remove();
+        })
     }
-    displayBookInformation();
 });
